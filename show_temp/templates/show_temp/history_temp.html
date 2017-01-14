@@ -1,12 +1,16 @@
 {% extends "base.html" %}
             {% block content %}
+                <form action="" method="get">
+                    {{ all_temp_measur.form.as_p }}
+                    <button type="submit" class="btn btn-warning btn-xs">Filtruj</button>
+                </form>
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>Data</th>
                         <th>Godzina</th>
                         <th>Temperatura</th>
                     </tr>
-                    {% for measurments in all_temp_measur %}
+                    {% for measurments in all_temp_measur.qs %}
                     <tr>
                         <td>{{measurments.tepm_measurment_data}}</td>
                         <td>{{measurments.temp_measurment_time}}</td>
