@@ -5,6 +5,8 @@ import os
 import datetime
 from .models import TempMeasurmentsValues
 from django.db.models import Avg, Max, Min
+from .filter import DataFilter
+
 
 
 os.system('modprobe w1-gpio')
@@ -45,9 +47,10 @@ def showTodayTemp(request):
 
 
 def showMeasurmentsHistory(request):
-    all_temp_measur = TempMeasurmentsValues.objects.all().exclude(
+    all_temp_measur = DataFilter(request.GET,
+         queryset=TempMeasurmentsValues.objects.all().exclude(
         tepm_measurment_data__gte=datetime.date.today() - datetime.timedelta()).order_by(
-            'tepm_measurment_data','temp_measurment_time')
+            'tepm_measurment_data','temp_measurment_time'))
 
     return render(request, 'show_temp/history_temp.html',
     {'all_temp_measur': all_temp_measur})
