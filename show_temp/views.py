@@ -6,6 +6,7 @@ import datetime
 from .models import TempMeasurmentsValues
 from django.db.models import Avg, Max, Min
 from .filter import DataFilter
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -46,11 +47,22 @@ def showTodayTemp(request):
     'today_aggregation_values': today_aggregation_values})
 
 
+def paginacja(strona, zmienna):
+    paginator = Paginator(zmienna, 24)
+    try:
+        page_filter = paginator.page(strona)
+    except PageNotAnInteger:
+        page_filter = paginator.page(1)
+    except EmptyPage:
+        page_filter = paginator.page(paginator.num_pages)
+    return page_filter
+
+
 def showMeasurmentsHistory(request):
     all_temp_measur = DataFilter(request.GET,
-         queryset=TempMeasurmentsValues.objects.all().exclude(
-        tepm_measurment_data__gte=datetime.date.today() - datetime.timedelta()).order_by(
-            'tepm_measurment_data','temp_measurment_time'))
+         queryset=TempMeasurmentsValues.objects.all())
+    page = request.GET.get('page')
+    page_filter = paginacja(page, all_temp_measur.qs)
 
     return render(request, 'show_temp/history_temp.html',
-    {'all_temp_measur': all_temp_measur})
+    {'all_temp_measur': all_temp_measur, 'page_filter': page_filter})
