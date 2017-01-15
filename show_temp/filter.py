@@ -3,6 +3,7 @@ from __future__ import unicode_literals, absolute_import, print_function
 from django.utils.encoding import python_2_unicode_compatible
 
 import django_filters
+from django import forms
 from .models import TempMeasurmentsValues
 
 
