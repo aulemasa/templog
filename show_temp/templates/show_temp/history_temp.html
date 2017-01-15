@@ -4,13 +4,14 @@
                     {{ all_temp_measur.form.as_p }}
                     <button type="submit" class="btn btn-warning btn-xs">Filtruj</button>
                 </form>
+
                 <table class="table table-bordered table-striped">
                     <tr>
                         <th>Data</th>
                         <th>Godzina</th>
                         <th>Temperatura</th>
                     </tr>
-                    {% for measurments in all_temp_measur.qs %}
+                    {% for measurments in page_filter %}
                     <tr>
                         <td>{{measurments.tepm_measurment_data}}</td>
                         <td>{{measurments.temp_measurment_time}}</td>
@@ -18,6 +19,23 @@
                     </tr>
                     {% endfor %}
                 </table>
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_filter.has_previous %}
+            <a href="?page={{ page_filter.previous_page_number }}">poprzednia</a>
+        {% endif %}
+
+        <span class="current">
+            Strona {{ page_filter.number }} z {{ page_filter.paginator.num_pages }}
+        </span>
+
+        {% if page_filter.has_next %}
+            <a href="?page={{ page_filter.next_page_number }}">następna</a>
+        {% endif %}
+    </span>
+    </div>
+
                 <span class="pull-left"><a href="{% url 'main' %}"><button type="button" class="btn btn-warning">Return</button></a></span>
                 <span class="pull-right"><button type="button" class="btn btn-info">Historical Measurments</button></span>
             {% endblock %}
