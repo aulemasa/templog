@@ -60,7 +60,9 @@ def paginacja(strona, zmienna):
 
 def showMeasurmentsHistory(request):
     all_temp_measur = DataFilter(request.GET,
-         queryset=TempMeasurmentsValues.objects.all())
+         queryset=TempMeasurmentsValues.objects.all().exclude(
+        tepm_measurment_data__gte=datetime.date.today() - datetime.timedelta()).order_by(
+            'tepm_measurment_data','temp_measurment_time'))
     page = request.GET.get('page')
     page_filter = paginacja(page, all_temp_measur.qs)
 
