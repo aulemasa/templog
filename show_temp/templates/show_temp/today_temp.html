@@ -28,5 +28,5 @@
                     {% endfor %}
                 </table>
                 <span class="pull-left"><a href="{% url 'main' %}"><button type="button" class="btn btn-warning">Return</button></a></span>
-                <span class="pull-right"><button type="button" class="btn btn-info">Historical Measurments</button></span>
+                <span class="pull-right"><a href="{% url 'history' %}"><button type="button" class="btn btn-info">Historical Measurments</button></a></span>
             {% endblock %}
