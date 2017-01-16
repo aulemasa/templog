@@ -19,23 +19,21 @@
                     </tr>
                     {% endfor %}
                 </table>
+                <div class="pull-right">
+                    <span class="pull-right">
+                    {% if page_filter.has_previous %}
+                        <a href="?page={{ page_filter.previous_page_number }}">poprzednia</a>
+                    {% endif %}
 
-  <div class="pagination">
-    <span class="step-links">
-        {% if page_filter.has_previous %}
-            <a href="?page={{ page_filter.previous_page_number }}">poprzednia</a>
-        {% endif %}
+                    <span class="current">
+                    Strona {{ page_filter.number }} z {{ page_filter.paginator.num_pages }}
+                    </span>
 
-        <span class="current">
-            Strona {{ page_filter.number }} z {{ page_filter.paginator.num_pages }}
-        </span>
-
-        {% if page_filter.has_next %}
-            <a href="?page={{ page_filter.next_page_number }}">następna</a>
-        {% endif %}
-    </span>
-    </div>
+                    {% if page_filter.has_next %}
+                    <a href="?page={{ page_filter.next_page_number }}">następna</a>
+                    {% endif %}
+                    </span>
+                </div>
 
                 <span class="pull-left"><a href="{% url 'main' %}"><button type="button" class="btn btn-warning">Return</button></a></span>
-                <span class="pull-right"><button type="button" class="btn btn-info">Historical Measurments</button></span>
             {% endblock %}
